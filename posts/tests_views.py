@@ -8,20 +8,19 @@ from django.core.exceptions import PermissionDenied
 
 class PostsViewsTests(TestCase):
     def setUp(self):
-        def setUp(self):
-            # Create a test superuser
-            self.user = User.objects.create_superuser(
-                username='testuser',
-                email='test@example.com',
-                password='testpassword'
-            )
+        # Create a test superuser
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpassword'
+        )
 
-            # Create a test Post instance
-            self.post = Post.objects.create(
-                title='Test Post',
-                content='This is a test post content.',
-                author=self.user
-            )
+        # Create a test Post instance
+        self.post = Post.objects.create(
+            title='Test Post',
+            content='This is a test post content.',
+            author=self.user
+        )
 
     def test_blog_home_view(self):
         client = Client()
@@ -42,10 +41,45 @@ class PostsViewsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_detail.html')
 
-    def test_post_create_view(self):
+    def test_post_create_view_with_superuser(self):
+        # Create a test superuser
+        self.user = User.objects.create_superuser(
+            username='testsuperuser',
+            email='testsuper@example.com',
+            password='testpassword'
+        )
         client = Client()
-        client.login(username='testuser', password='testpassword')
+        client.login(email='testsuper@example.com', password='testpassword')
+
         response = client.get(reverse('post_create'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_form.html')
+
+    def test_post_create_view_with_staff(self):
+        # Create a test staff member
+        self.user = User.objects.create_user(
+            is_staff=True,
+            username='teststaff',
+            email='staff@example.com',
+            password='testpassword'
+        )
+
+        client = Client()
+        client.login(email='staff@example.com', password='testpassword')
+        response = client.get(reverse('post_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'post_form.html')
+
+    def test_post_create_view_without_login(self):
+        client = Client()
+        response = client.get(reverse('post_create'))
+        self.assertEqual(response.status_code, 403)
+
+
+    def test_post_create_view_with_normal_user(self):
+        client = Client()
+        client.login(username='testuser', password='testpassword')
+        response = client.get(reverse('post_create'))
+        self.assertEqual(response.status_code, 403)
+
 

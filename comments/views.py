@@ -7,6 +7,7 @@ from .models import Comment
 from .forms import CommentForm
 from posts.models import Post
 
+# Handles the POST request for the post detail page(PostDetailView)
 class PostComment(LoginRequiredMixin, SingleObjectMixin, FormView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'

@@ -11,8 +11,8 @@ from django.test import RequestFactory
 
 class CommentsViewsTests(TestCase):
     def setUp(self):
-        # Create a test superuser
-        self.user = User.objects.create_superuser(
+        # Create a test user
+        self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
             password='testpassword'
@@ -25,9 +25,9 @@ class CommentsViewsTests(TestCase):
             author=self.user
         )
 
-    def test_post_comment_view(self):
+    def test_post_comment_view_logged_in(self):
         client = Client()
-        client.login(username='testuser', password='testpassword')
+        client.login(email='test@example.com', password='testpassword')
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
         response = client.post(url, {'content': 'Test comment'})
         self.assertEqual(response.status_code, 302)  # Redirects after posting a comment
@@ -44,7 +44,8 @@ class CommentsViewsTests(TestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['content'], ['This field is required.'])
 
-        # Test with non-empty content
+    def test_post_comment_view_with_valid_content(self):
+        # Test with valid content
         form = CommentForm(data={'content': 'Test comment'})
         self.assertTrue(form.is_valid())
 
@@ -68,7 +69,7 @@ class CommentsViewsTests(TestCase):
 
     def test_comment_is_not_saved_if_content_is_empty(self):
         client = Client()
-        client.login(username='testuser', password='testpassword')
+        client.login(email='test@example.com', password='testpassword')
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
         response = client.post(url, {'content': ''})
 

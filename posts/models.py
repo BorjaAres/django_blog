@@ -6,7 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
 
-
+# This receiver function will be called after every migration
+# It creates a new permission 'add_post' for the Post model
 @receiver(post_migrate)
 def create_permissions(sender, **kwargs):
     from .models import Post  # import here to avoid circular import
