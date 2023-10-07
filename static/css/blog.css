@@ -1,0 +1,61 @@
+/* General Styles for the posts */
+
+.blog-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .blog-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 2rem;
+    }
+}
+
+@media (min-width: 1023px) {
+    .blog-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin: 10rem;
+    }
+}
+
+.post__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2rem;
+    background-color: var(--lighter-grey);
+}
+
+.blog__post__button {
+    margin-top: auto;
+    width: 100%;
+}
+
+@media(min-width: 1023px) {
+    .blog__post__button{
+        width: 60%;
+    }
+}
+
+.pagination {
+    margin-bottom: 2rem;
+}
+
+.comment {
+    background-color: var(--white);
+    box-shadow: inset 0px 2px 1px 0px rgba(112,112,112,0.59);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 5px;
+}
+
+.responsive-textarea {
+    width: 100%; /* Use any percentage value that fits your design */
+    max-width: 100%; /* Ensures it doesn't exceed the parent container width */
+}

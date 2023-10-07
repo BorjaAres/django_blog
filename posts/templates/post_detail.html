@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <main>
+        <div class="centered">
+            <div class="blog index__blog">
+                <h3 class="post__title">{{ post.title }}</h3>
+                <article class="text-left">{{ post.content|safe }}</article>
+
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+                {% endif %}
+
+                <p class="text-right">Posted by <b>{{ post.author.first_name }} {{ post.author.last_name }}</b> on <b>{{ post.date|date:"F d, Y" }}</b></p>
+                <hr>
+
+                <h2>Comments</h2>
+
+                    {% if post.comment.all %}
+                        {% for comment in post.comment.all %}
+                            <div class="text-left comment">
+                                <b>{{ comment.user.username }}</b> said <b>{{ comment.date|timesince }} ago</b>
+                                <p>{{ comment.content }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Be the first one to add a comment.</p>
+                    {% endif %}
+                <h3>Add a comment</h3>
+                <div class="comment-form">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.content }}
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=MedievalSharp&family=Pangolin&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=Pangolin&family=Quicksand:wght@400;700&family=VT323&display=swap');
+
+:root {
+    --light-orange: rgb(217, 151, 86);      /* Lighter shade of orange */
+    --lighter-grey: rgb(200, 200, 200);    /* Lighter grey */
+    --light-grey: rgb(175, 175, 175);      /* Light grey */
+    --medium-grey: rgb(150, 150, 150);     /* Medium grey */
+    --dark-grey: rgb(100, 100, 100);       /* Dark grey */
+    --black: rgb(42, 39, 39);               /* Darker shade of black */
+
+
+    --orange: rgb(217, 151, 86);
+    --light-black: rgb(42, 39, 39);
+    --lighter-grey: rgb(241, 231, 231);
+    --light-grey: rgb(211, 211, 211);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+    --bluish-grey: #dfe9f3;
+    --header-shop: 'Dancing Script', cursive;
+    --content: 'Quicksand', sans-serif;
+
+}
+
+/*Globals*/
+html {
+    font-size: 62.5%;
+      box-sizing: border-box; /*Hack para box-model*/
+
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    font-size: 1.6rem;
+    background-color: var(--bluish-grey);
+    text-align: center;
+    font-family: var(--content);
+
+}
+
+.text-left {
+    text-align: left;
+}
+
+.image {
+    width: 100%;
+    object-fit: contain;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Blog Global Styles */
+.blog {
+    background-color: var(--lighter-grey);
+    box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.59);
+    border-radius: 1rem;
+    margin: 1rem;
+    max-width: 100rem;
+}
+
+@media (min-width: 768px) {
+  .blog {
+    margin: 2rem;
+
+  }
+}
+
+@media (min-width: 1023px) {
+  .blog {
+
+  }
+}
+
+.post__title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .post__title {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 1023px) {
+    .post__title {
+        font-size: 3rem;
+    }
+}
+
+.post__button {
+    display: block; /* Set the display to block to allow centering */
+    background-color: var(--light-black);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 5rem;
+    border: none;
+    margin: 0 auto; /* Center the button horizontally */
+    margin-top: 1rem;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+.post__button:hover {
+    background-color: var(--orange);
+}

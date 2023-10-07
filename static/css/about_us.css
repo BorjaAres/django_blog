@@ -1,0 +1,24 @@
+/* About Us */
+
+.about-container {
+  gap: 2rem;
+  margin: 2rem 2rem 5rem 2rem;
+}
+
+@media (min-width: 1023px) {
+  .about-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.about__content {
+  border-bottom: dashed var(--light-black) 1px;
+
+}
+
+@media (min-width: 1023px) {
+  .about__content {
+    border-top: dashed var(--light-black) 1px;
+  }
+}

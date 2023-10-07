@@ -1,0 +1,86 @@
+
+
+/* Shop*/
+/* Layout for Shop */
+
+
+.shop-section__title {
+  font-size: 2rem;
+  background-color: var(--light-black);
+  color: var(--white);
+  display: flex; /* Add display:flex to align the shop title */
+  line-height: 0.3; /* Adjust the line-height to center the text vertically */
+}
+
+@media (min-width: 768px) {
+  .shop-section__title {
+    font-size: 3rem;
+  }
+}
+
+/* Hover effect for the .shop-section__title when hovering over .shop-section (Asia) */
+.shop-section__asia:hover .shop-section__title {
+  background-color: var(--orange);
+  color: var(--light-black);
+}
+
+/* Hover effect for the .shop-section__title when hovering over .shop-section (Middle East) */
+.shop-section__middleEast:hover .shop-section__title {
+  background-color: var(--orange);
+  color: var(--light-black);
+}
+
+
+/* Styles for the shop background images */
+.shop-section {
+  height: 60rem; /* Set a fixed height for the .entry elements */
+  font-family: var(--header-shop);
+}
+
+.shop-section__asia {
+  background-image: url(../img/asia2.jpg);
+}
+
+.shop-section__middleEast {
+  background-image: url(../img/middleEast.jpeg);
+}
+
+.blog__button-scroll {
+  display: block;
+  line-height: 35px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  border-radius: 1rem;
+  margin: 2rem;
+  box-shadow: 0px 5px 15px 5px rgba(0, 0, 0, 0.59);
+  font-weight: 550;
+}
+
+@media (min-width: 1023px) {
+  .blog__button-scroll {
+    width: 20rem;
+    margin: 2rem auto;
+  }
+}
+
+.scroll-button:hover {
+  background-color: #0056b3;
+}
+
+/* Blog */
+.index__blog {
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .index__blog {
+        padding: 5rem;
+    }
+}
+
+@media (min-width: 1023px) {
+  .index__post__button{
+    width: 20%;
+  }
+}

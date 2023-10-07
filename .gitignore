@@ -1,0 +1,27 @@
+# .gitignore
+
+# Ignore Python virtual environments
+venv/
+env/
+
+# Ignore Python cache files and bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore Django migration files
+*/migrations/*
+
+# Ignore PyCharm project settings
+.idea/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore site-packages directory
+lib/site-packages/
+
+# Ignore Scripts directory from venv
+Scripts/

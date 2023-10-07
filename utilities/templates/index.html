@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+    {% block main %}
+     <!-- Main Content Section -->
+
+            <a href="#blog" class="blog__button-scroll" id="blog-scroll">&#8659; Read our Blog &#8659;</a>
+
+            <!-- Blog section -->
+            <div class=" " id="">
+                    {% for post in latest_posts %}
+                        <div class="centered">
+                            <div class="blog  index__blog">
+                                <h3 class="post__title">{{ post.title }}</h3>
+                                <article class="text-left">{{ post.content|truncatewords:40|safe }}</article>
+
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+                                {% endif %}
+
+                                <a href="{% url 'post_detail' post.id %}" class="post__button index__post__button">Read Article</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+            </div>
+        </main>
+    </div>
+    {% endblock %}
+

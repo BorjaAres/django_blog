@@ -1,0 +1,8 @@
+/* Contact */
+.contact-input{
+  width: 100%;
+  padding: 10rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  border: var(--light-black) 1px solid;
+}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<main>
+    <!-- Blog section -->
+    <div class="blog-container">
+        {% for post in posts %}
+            <div class="blog" id="">
+                <div class="post__content">
+                    <h3 class="post__title">{{ post.title }}</h3>
+
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+                    {% endif %}
+
+                    <article class="text-left">{{ post.content|truncatewords:40|safe }}</article>
+                    <a href="{% url 'post_detail' post.id %}" class="post__button blog__post__button">Read Article</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+       <!-- Pagination -->
+    <div class="">
+        <a href="{% url 'all_posts' %}" class="all_posts-link">See All Posts</a>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts %}
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">« first</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if num == page_obj.number %}
+                        <span class="current-page"><strong>{{ num }}</strong></span>
+                    {% else %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last »</a>
+                {% endif %}
+            {% else %}
+                    <p>No posts available.</p>
+            {% endif %}
+
+
+        </span>
+    </div>
+</main>
+{% endblock %}
