@@ -2,9 +2,11 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from user.models import User
 from .models import Post
+from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
 
 
-class BlogViewsTests(TestCase):
+class PostsViewsTests(TestCase):
     def setUp(self):
         def setUp(self):
             # Create a test superuser

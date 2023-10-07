@@ -4,9 +4,12 @@ from user.models import User
 from posts.models import Post
 from .models import Comment
 from .forms import CommentForm
-from django_webtest import WebTest
+from .views import PostComment
+from django.test import RequestFactory
 
-class BlogViewsTests(TestCase, WebTest):
+# from django_webtest import WebTest
+
+class CommentsViewsTests(TestCase):
     def setUp(self):
         # Create a test superuser
         self.user = User.objects.create_superuser(
@@ -45,19 +48,23 @@ class BlogViewsTests(TestCase, WebTest):
         form = CommentForm(data={'content': 'Test comment'})
         self.assertTrue(form.is_valid())
 
-    # def test_comment_is_saved(self):
-    #     # Use the WebTest user method to log in
-    #     self.app.set_user(self.testuser)
-    #
-    #     # Get the URL for the post detail view
-    #     url = reverse('post_detail', kwargs={'pk': self.testpost.pk})
-    #
-    #     # Use the WebTest app to post a comment
-    #     response = self.app.post(url, params={'content': 'Test comment'}, status=302)
-    #
-    #     # Check if the comment was saved
-    #     comment = Comment.objects.filter(content='Test comment').first()
-    #     self.assertIsNotNone(comment)
+    def test_comment_is_saved(self):
+        # Use the RequestFactory to simulate a POST request
+        factory = RequestFactory()
+        url = reverse('post_detail', kwargs={'pk': self.post.pk})
+        data = {'content': 'Test comment'}
+        request = factory.post(url, data)
+
+        # Manually set the user on the request
+        request.user = self.user
+
+        # Get the view and call it with the request
+        view = PostComment.as_view()
+        response = view(request, pk=self.post.pk)
+
+        # Check if the comment was saved
+        comment = Comment.objects.filter(content='Test comment').first()
+        self.assertIsNotNone(comment)
 
     def test_comment_is_not_saved_if_content_is_empty(self):
         client = Client()

@@ -6,7 +6,7 @@ from django.db.utils import IntegrityError
 
 User = get_user_model()
 
-class BlogModelTests(TestCase):
+class CommentModelTests(TestCase):
     def setUp(self):
         # Create a test user
         self.user = User.objects.create_user(

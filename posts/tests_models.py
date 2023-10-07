@@ -8,7 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 User = get_user_model()
 
-class BlogModelTests(TestCase):
+class PostModelTests(TestCase):
     def setUp(self):
         # Create a test user
         self.user = User.objects.create_user(

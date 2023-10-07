@@ -12,7 +12,6 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'responsive-textarea'}),
         }
 
-
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(CommentForm, self).__init__(*args, **kwargs)
