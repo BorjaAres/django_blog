@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from .forms import UserCreationForm
 
 class UserManagerTest(TestCase):
     def setUp(self):
@@ -7,7 +8,7 @@ class UserManagerTest(TestCase):
 
     def test_create_user(self):
         user = self.User.objects.create_user(
-            username='testuser', email='testuser@example.com', password='password')
+            username='testuser', email='testuser@example.com', password='password', first_name='Test', last_name='User')
         self.assertEqual(user.email, 'testuser@example.com')
         self.assertTrue(user.check_password('password'))
         self.assertFalse(user.is_superuser)
@@ -19,14 +20,38 @@ class UserManagerTest(TestCase):
                 username='testuser', email='', password='password')
 
     def test_create_user_without_username(self):
-        with self.assertRaises(ValueError):
-            user = self.User.objects.create_user(
-                username='', email='testuser@example.com', password='password')
+        form = UserCreationForm({
+            'username': '',
+            'email': 'testuser@example.com',
+            'password1': 'password',
+            'password2': 'password'
+        })
+        self.assertFalse(form.is_valid())
 
     def test_create_user_without_password(self):
-        with self.assertRaises(ValueError):
-            user = self.User.objects.create_user(
-                username='testuser', email='testuser@example.com', password='')
+        form = UserCreationForm({
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password1': '',
+            'password2': ''
+        })
+        self.assertFalse(form.is_valid())
+    def test_create_user_without_first_name(self):
+        user = self.User.objects.create_user(
+            username='testuser', email='testuser@example.com', password='password', first_name='', last_name='User')
+        self.assertEqual(user.first_name, '')
+
+
+    def test_create_user_without_last_name(self):
+        user = self.User.objects.create_user(
+            username='testuser', email='testuser@example.com', password='password', first_name='Test', last_name='')
+        self.assertEqual(user.last_name, '')
+
+    def test_create_user_without_first_name_and_last_name(self):
+        user = self.User.objects.create_user(
+            username='testuser', email='testuser@example.com', password='password', first_name='', last_name='')
+        self.assertEqual(user.first_name, '')
+        self.assertEqual(user.last_name, '')
 
     def test_create_superuser(self):
         user = self.User.objects.create_superuser(

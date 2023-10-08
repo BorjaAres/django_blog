@@ -7,7 +7,7 @@ from .forms import CommentForm
 from .views import PostComment
 from django.test import RequestFactory
 
-# from django_webtest import WebTest
+# TEST THE FORM HERE OR CREATE TESTS FORM?
 
 class CommentsViewsTests(TestCase):
     def setUp(self):
