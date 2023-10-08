@@ -58,10 +58,15 @@ class UserManagerTest(TestCase):
             user = self.User.objects.create_superuser(
                 username='testadmin', email='', password='password')
 
-    def test_create_superuser_without_username_raises_value_error(self):
+    def test_create_superuser_without_first_name_raises_value_error(self):
         with self.assertRaisesMessage(ValueError, 'The given username must be set'):
             user = self.User.objects.create_superuser(
-                username='', email='testadmin@example.com', password='password')
+                username='testadmin',first_name='', last_name='admin', email='testadmin@example.com', password='password')
+
+    def test_create_superuser_without_last_name_raises_value_error(self):
+        with self.assertRaisesMessage(ValueError, 'The given username must be set'):
+            user = self.User.objects.create_superuser(
+                username='testadmin',first_name='test', last_name='', email='testadmin@example.com', password='password')
 
     def test_create_superuser_without_password_raises_value_error(self):
         with self.assertRaisesMessage(ValueError, 'The given password must be set'):
