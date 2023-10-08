@@ -109,3 +109,4 @@ class UserTest(TestCase):
     def test_user_is_not_superuser_by_default(self):
         # Test that the user is not superuser by default
         self.assertFalse(self.user.is_superuser)
+

@@ -73,4 +73,15 @@ class CommentModelTests(TestCase):
                 content=None
             )
 
+    def test_str_representation(self):
+        """
+        Test that the string representation of a comment is correct.
+        """
+        comment = Comment.objects.create(
+            post=self.post,
+            user=self.user,
+            content='This is a test comment.'
+        )
+
+        self.assertEqual(str(comment), 'This is a test comment. | test@example.com | Test Post')
 

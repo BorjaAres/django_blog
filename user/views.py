@@ -37,5 +37,3 @@ class UserRegistrationView(CreateView):
     def get_success_url(self):
         # Redirect to home page after registration is successful
         return '/'
-
-

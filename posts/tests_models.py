@@ -103,3 +103,7 @@ class TestPostModel(TestCase):
                 author=self.user
             )
             post.full_clean()  # This will run all validators and raise ValidationError if any validator fails
+
+    def test_str_representation(self):
+        """Test that the string representation of a Post instance is correct."""
+        self.assertEqual(str(self.post), 'Test Post')
