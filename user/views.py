@@ -23,9 +23,6 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     pass
 
-class UserAddressView():
-    pass
-
 class UserRegistrationView(CreateView):
     model = User
     form_class = UserCreationForm

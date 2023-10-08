@@ -25,7 +25,7 @@ class TestPostsViews(TestCase):
             author=self.user
         )
 
-    def test_home_page(self):
+    def test_blog_home_page(self):
         """Test that the blog home page loads correctly."""
         client = Client()
         response = client.get(reverse('blog_home'))
@@ -39,7 +39,7 @@ class TestPostsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'all_posts.html')
 
-    def test_individual_post_page(self):
+    def test_post_detail_page(self):
         """Test that an individual post's detail page loads correctly."""
         client = Client()
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
@@ -47,7 +47,28 @@ class TestPostsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_detail.html')
 
-    def test_create_post_as_superuser(self):
+    def test_post_form_page(self):
+        """Test that the post form page loads correctly."""
+        self.user = User.objects.create_superuser(
+            username='testadmin',
+            email='testadmin@example.com',
+            password='testpassword'
+        )
+
+        client = Client()
+        # Log in as the superuser
+        client.login(email='testadmin@example.com', password='testpassword')
+
+        response = client.get(reverse('post_create'))
+        self.assertTemplateUsed(response, 'post_form.html')
+
+    def test_create_post_form_page_is_forbidden(self):
+        """Test that the post is forbidden if not superuser."""
+        client = Client()
+        response = client.get(reverse('post_create'))
+        self.assertEqual(response.status_code, 403)
+
+    def test_create_post_as_superuser_is_valid(self):
         """Test that a superuser can access the post creation page."""
         # Create a test superuser
         self.user = User.objects.create_superuser(
@@ -63,7 +84,7 @@ class TestPostsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_form.html')
 
-    def test_create_post_as_staff(self):
+    def test_create_post_as_staff_is_valid(self):
         """Test that a staff member can access the post creation page."""
         # Create a test staff member
         self.user = User.objects.create_user(
@@ -80,16 +101,7 @@ class TestPostsViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_form.html')
 
-    def test_create_post_without_login(self):
-        """Test that an unauthenticated user cannot access the post creation page."""
-
-        client = Client()
-
-        response = client.get(reverse('post_create'))
-
-        self.assertEqual(response.status_code, 403)
-
-    def test_create_post_as_normal_user(self):
+    def test_create_post_page_as_normal_user_is_forbidden(self):
         """Test that a normal user cannot access the post creation page."""
 
         client = Client()
