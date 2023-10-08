@@ -16,5 +16,3 @@ class Comment(models.Model):
         return self.content + ' | ' + str(self.user) + ' | ' + str(self.post)
         # Return a string representation of the comment, including content, user, and associated post
 
-
-# Create your models here.

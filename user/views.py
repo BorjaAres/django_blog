@@ -3,8 +3,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic.edit import CreateView
-from .forms import UserCreationForm, UserAddressForm
-from .models import User, Address
+from .forms import UserCreationForm
+from .models import User
 
 class UserLoginView(LoginView):
     form_class = AuthenticationForm
