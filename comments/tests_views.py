@@ -7,8 +7,6 @@ from .forms import CommentForm
 from .views import PostComment
 from django.test import RequestFactory
 
-# TEST THE FORM HERE OR CREATE TESTS FORM?
-
 class CommentsViewsTests(TestCase):
     def setUp(self):
         # Create a test user
@@ -25,31 +23,34 @@ class CommentsViewsTests(TestCase):
             author=self.user
         )
 
-    def test_post_comment_view_logged_in(self):
+    def test_post_comment_redirects_if_logged_in(self):
+        """Test that posting a comment redirects to the post detail page if the user is logged in"""
         client = Client()
         client.login(email='test@example.com', password='testpassword')
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
         response = client.post(url, {'content': 'Test comment'})
         self.assertEqual(response.status_code, 302)  # Redirects after posting a comment
 
-    def test_post_comment_view_without_login(self):
+    def test_post_comment_redirects_to_login_if_not_logged_in(self):
+        """Test that posting a comment redirects to the login page if the user is not logged in"""
         client = Client()
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
         response = client.post(url, {'content': 'Test comment'})
         self.assertEqual(response.status_code, 302)  # Redirects to login page
 
-    def test_post_comment_view_with_no_content(self):
-        # Test with empty content
+    def test_comment_form_is_invalid_with_no_content(self):
+        """Test that the comment form is invalid and shows an error message if the content is empty"""
         form = CommentForm(data={'content': ''})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['content'], ['This field is required.'])
 
-    def test_post_comment_view_with_valid_content(self):
-        # Test with valid content
+    def test_comment_form_is_valid_with_content(self):
+        """Test that the comment form is valid if the content is provided"""
         form = CommentForm(data={'content': 'Test comment'})
         self.assertTrue(form.is_valid())
 
-    def test_comment_is_saved(self):
+    def test_comment_is_saved_if_user_and_post_and_content_are_provided(self):
+        """Test that a comment is saved to the database if the user, post, and content are provided"""
         # Use the RequestFactory to simulate a POST request
         factory = RequestFactory()
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
@@ -68,6 +69,7 @@ class CommentsViewsTests(TestCase):
         self.assertIsNotNone(comment)
 
     def test_comment_is_not_saved_if_content_is_empty(self):
+        """Test that a comment is not saved to the database if the content is empty"""
         client = Client()
         client.login(email='test@example.com', password='testpassword')
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
@@ -78,6 +80,7 @@ class CommentsViewsTests(TestCase):
         self.assertIsNone(comment)
 
     def test_comment_is_not_saved_if_user_is_not_logged_in(self):
+        """Test that a comment is not saved to the database if the user is not logged in"""
         client = Client()
         url = reverse('post_detail', kwargs={'pk': self.post.pk})
         response = client.post(url, {'content': 'Test comment'})

@@ -8,14 +8,15 @@ User = get_user_model()
 
 class CommentModelTests(TestCase):
     def setUp(self):
-        # Create a test user
+        """
+        Set up a test user and a test post instance for use in the tests.
+        """
         self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
             password='testpassword'
         )
 
-        # Create a test Post instance
         self.post = Post.objects.create(
             title='Test Post',
             content='This is a test post content.',
@@ -23,21 +24,24 @@ class CommentModelTests(TestCase):
             author=self.user
         )
 
-    def test_comment_creation(self):
-        # Create a test Comment instance
+    def test_successful_comment_creation(self):
+        """
+        Test that a comment can be successfully created with valid data.
+        """
         comment = Comment.objects.create(
             post=self.post,
             user=self.user,
             content='This is a test comment.'
         )
 
-        # Check if the Comment instance was created successfully
         self.assertEqual(comment.post.title, 'Test Post')
         self.assertEqual(comment.user, self.user)
         self.assertEqual(comment.content, 'This is a test comment.')
 
-    def test_comment_creation_without_user(self):
-        # Attempt to create a test Comment instance without a user
+    def test_comment_creation_without_user_fails(self):
+        """
+        Test that attempting to create a comment without a user raises an IntegrityError.
+        """
         with self.assertRaises(IntegrityError):
             comment = Comment.objects.create(
                 post=Post.objects.create(
@@ -48,16 +52,20 @@ class CommentModelTests(TestCase):
                 content='This is a test comment.'
             )
 
-    def test_comment_creation_without_post(self):
-        # Attempt to create a test Comment instance without a post
+    def test_comment_creation_without_post_fails(self):
+        """
+        Test that attempting to create a comment without a post raises an IntegrityError.
+        """
         with self.assertRaises(IntegrityError):
             comment = Comment.objects.create(
                 user=self.user,
                 content='This is a test comment.'
             )
 
-    def test_comment_creation_without_content(self):
-        # Attempt to create a test Comment instance without content
+    def test_comment_creation_without_content_fails(self):
+        """
+        Test that attempting to create a comment without content raises an IntegrityError.
+        """
         with self.assertRaises(IntegrityError):
             comment = Comment.objects.create(
                 post=self.post,

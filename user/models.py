@@ -26,6 +26,13 @@ class CustomUserManager(UserManager):
 
     # Method to create a superuser
     def create_superuser(self, username, email=None, password=None, **extra_fields):
+        # if not first_name:
+        #     raise ValueError('First name is required')
+        # if not last_name:
+        #     raise ValueError('Last name is required')
+        # if not password:
+        #     raise ValueError('Password is required')
+
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_staff', True)
 

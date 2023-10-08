@@ -2,12 +2,16 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .forms import UserCreationForm
 
-class UserManagerTest(TestCase):
+class TestUserManager(TestCase):
+    """Test case for the UserManager in the User app."""
+
     @classmethod
     def setUpTestData(cls):
+        """Set up the test environment before each test method is run."""
         cls.User = get_user_model()
 
-    def test_create_user_with_valid_data(self):
+    def test_create_valid_user(self):
+        """Test creating a user with valid data."""
         user = self.User.objects.create_user(
             username='testuser', email='testuser@example.com', password='password', first_name='Test', last_name='User')
         self.assertEqual(user.email, 'testuser@example.com')
@@ -15,12 +19,14 @@ class UserManagerTest(TestCase):
         self.assertFalse(user.is_superuser)
         self.assertFalse(user.is_staff)
 
-    def test_create_user_without_email_raises_value_error(self):
+    def test_create_user_without_email(self):
+        """Test creating a user without an email raises a ValueError."""
         with self.assertRaisesMessage(ValueError, 'Email is required'):
             user = self.User.objects.create_user(
                 username='testuser', email='', password='password')
 
-    def test_create_user_without_username_is_invalid(self):
+    def test_create_user_without_username(self):
+        """Test creating a user without a username is invalid."""
         form = UserCreationForm({
             'username': '',
             'email': 'testuser@example.com',
@@ -30,7 +36,8 @@ class UserManagerTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertFormError(form, 'username', 'This field is required.')
 
-    def test_create_user_without_password_is_invalid(self):
+    def test_create_user_without_password(self):
+        """Test creating a user without a password is invalid."""
         form = UserCreationForm({
             'username': 'testuser',
             'email': 'testuser@example.com',
@@ -40,12 +47,14 @@ class UserManagerTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertFormError(form, 'password1', 'This field is required.')
 
-    def test_create_user_without_last_name_is_valid(self):
+    def test_create_user_without_last_name(self):
+        """Test creating a user without a last name is valid."""
         user = self.User.objects.create_user(
             username='testuser', email='testuser@example.com', password='password', first_name='Test', last_name='')
         self.assertEqual(user.last_name, '')
 
-    def test_create_superuser_with_valid_data(self):
+    def test_create_valid_superuser(self):
+        """Test creating a superuser with valid data."""
         user = self.User.objects.create_superuser(
             username='testadmin', email='testadmin@example.com', password='password')
         self.assertEqual(user.email, 'testadmin@example.com')
@@ -53,25 +62,30 @@ class UserManagerTest(TestCase):
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
 
-    def test_create_superuser_without_email_raises_value_error(self):
+    def test_create_superuser_without_email(self):
+        """Test creating a superuser without an email raises a ValueError."""
         with self.assertRaisesMessage(ValueError, 'Email is required'):
             user = self.User.objects.create_superuser(
                 username='testadmin', email='', password='password')
 
-    def test_create_superuser_without_first_name_raises_value_error(self):
-        with self.assertRaisesMessage(ValueError, 'The given username must be set'):
+    def test_create_superuser_without_first_name(self):
+        """Test creating a superuser without a first name raises a ValueError."""
+        with self.assertRaisesMessage(ValueError, 'First name is required'):
             user = self.User.objects.create_superuser(
                 username='testadmin',first_name='', last_name='admin', email='testadmin@example.com', password='password')
 
-    def test_create_superuser_without_last_name_raises_value_error(self):
-        with self.assertRaisesMessage(ValueError, 'The given username must be set'):
-            user = self.User.objects.create_superuser(
-                username='testadmin',first_name='test', last_name='', email='testadmin@example.com', password='password')
+    def test_create_superuser_without_last_name(self):
+         """Test creating a superuser without a last name raises a ValueError."""
+         with self.assertRaisesMessage(ValueError, 'Last name is required'):
+             user = self.User.objects.create_superuser(
+                 username='testadmin',first_name='test', last_name='', email='testadmin@example.com', password='password')
 
-    def test_create_superuser_without_password_raises_value_error(self):
-        with self.assertRaisesMessage(ValueError, 'The given password must be set'):
-            user = self.User.objects.create_superuser(
-                username='testadmin', email='testadmin@example.com', password='')
+    def test_create_superuser_without_password(self):
+         """Test creating a superuser without a password raises a ValueError."""
+         with self.assertRaisesMessage(ValueError, 'Password is required'):
+             user = self.User.objects.create_superuser(
+                 username='testadmin', email='testadmin@example.com', password='')
+
 
 class UserTest(TestCase):
     @classmethod
