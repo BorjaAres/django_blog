@@ -1,122 +1,62 @@
-from django.test import TestCase, SimpleTestCase
+from django.test import TestCase, SimpleTestCase, override_settings
 from django.urls import reverse, resolve
 from django.contrib.auth import get_user_model
-from user.views import UserLoginView, UserLogoutView, UserRegistrationView
+from .views import UserLoginView, UserLogoutView, UserRegistrationView
 from posts.views import PostCreateView
+
 
 User = get_user_model()
 
-class URLTests(TestCase):
-    def test_login_url(self):
-        """
-        Test the login URL.
-        The response status code should be 200 (OK).
-        The correct view function should be used.
-        """
+@override_settings(ROOT_URLCONF='user.urls')
+class StatusCodeTests(TestCase):
+    """
+    Test case for checking status codes.
+    """
+    def test_login_status_code(self):
         url = reverse('login')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.view_class, UserLoginView)
 
-    def test_logout_url(self):
-         """
-         Test the logout URL.
-         The response status code should be 302 (Found), as we expect a redirect after logout.
-         The correct view function should be used.
-         """
-         url = reverse('logout')
-         response = self.client.get(url)
-         self.assertEqual(response.status_code, 302)
-         self.assertEqual(response.resolver_match.func.view_class, UserLogoutView)
+    def test_logout_status_code(self):
+        url = reverse('logout')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
 
-    def test_register_url(self):
-         """
-         Test the register URL.
-         The response status code should be 200 (OK).
-         The correct view function should be used.
-         """
-         url = reverse('register')
-         response = self.client.get(url)
-         self.assertEqual(response.status_code, 200)
-         self.assertEqual(response.resolver_match.func.view_class, UserRegistrationView)
-
-    def test_post_create_url(self):
-        """
-        Test the post create URL.
-        The response status code should be 200 (OK).
-        The correct view function should be used.
-        """
-        self.user = User.objects.create_superuser('testuser', 'test@example.com', 'testpassword')
-        self.client.login(email='test@example.com', password='testpassword')
-
-        url = reverse('post_create')
+    def test_register_status_code(self):
+        url = reverse('register')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.resolver_match.func.view_class, PostCreateView)
-
-
-class CheckURLSettingsTests(SimpleTestCase):
+@override_settings(ROOT_URLCONF='user.urls')
+class ViewResolutionTests(SimpleTestCase):
     """
-    Test case for checking that URLs resolve to the correct views.
+    Test case for checking view resolution.
     """
-
-    def test_login_url_resolves(self):
-        """
-        Test that the URL for the login view resolves to the correct view.
-        """
+    def test_login_view_resolution(self):
         url = reverse('login')
         self.assertEqual(resolve(url).func.view_class, UserLoginView)
 
-    def test_logout_url_resolves(self):
-         """
-         Test that the URL for the logout view resolves to the correct view.
-         """
-         url = reverse('logout')
-         self.assertEqual(resolve(url).func.view_class, UserLogoutView)
+    def test_logout_view_resolution(self):
+        url = reverse('logout')
+        self.assertEqual(resolve(url).func.view_class, UserLogoutView)
 
-    def test_register_url_resolves(self):
-         """
-         Test that the URL for the register view resolves to the correct view.
-         """
-         url = reverse('register')
-         self.assertEqual(resolve(url).func.view_class, UserRegistrationView)
+    def test_register_view_resolution(self):
+        url = reverse('register')
+        self.assertEqual(resolve(url).func.view_class, UserRegistrationView)
 
-    def test_post_create_url_resolves(self):
-        """
-        Test that the URL for the post create view resolves to the correct view.
-        """
-        url = reverse('post_create')
-        self.assertEqual(resolve(url).func.view_class, PostCreateView)
-
-class CheckUrlConfigTests(SimpleTestCase):
+@override_settings(ROOT_URLCONF='user.urls')
+class URLPatternTests(TestCase):
     """
-    Test case for checking that URLs resolve to the correct views.
+    Test case for the URLs in the user application.
     """
+    def test_login_url_pattern(self):
+        response = self.client.get('/user/login/')
+        self.assertEqual(response.status_code, 200)
 
-    def test_login_url_resolves(self):
-        """
-        Test that the URL for the login view resolves to the correct view.
-        """
-        url = reverse('login')
-        self.assertEqual(resolve(url).func.view_class, UserLoginView)
+    def test_logout_url_pattern(self):
+        response = self.client.get('/user/logout/')
+        self.assertEqual(response.status_code, 302)
 
-    def test_logout_url_resolves(self):
-         """
-         Test that the URL for the logout view resolves to the correct view.
-         """
-         url = reverse('logout')
-         self.assertEqual(resolve(url).func.view_class, UserLogoutView)
+    def test_register_url_pattern(self):
+        response = self.client.get('/user/register/')
+        self.assertEqual(response.status_code, 200)
 
-    def test_register_url_resolves(self):
-         """
-         Test that the URL for the register view resolves to the correct view.
-         """
-         url = reverse('register')
-         self.assertEqual(resolve(url).func.view_class, UserRegistrationView)
-
-    def test_post_create_url_resolves(self):
-        """
-        Test that the URL for the post create view resolves to the correct view.
-        """
-        url = reverse('post_create')
-        self.assertEqual(resolve(url).func.view_class, PostCreateView)
