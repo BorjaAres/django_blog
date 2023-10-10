@@ -39,14 +39,35 @@ class StatusCodeTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_post_detail_status_code(self):
-        url = reverse('post_detail', args=[1])
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        user = User.objects.create_user(
+            username='testuser',
+            email='testuser@example.com',
+            password='testpassword',
+        )
 
-    def test_post_create_status_code(self):
+        post = Post.objects.create(
+            title='Test Post',
+            content='Test content',
+            author=user,
+        )
+
+        url = reverse('post_detail', args={post.id})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_create_status_code_unauthorized_user(self):
         url = reverse('post_create')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
+
+    def test_post_create_status_code_authorized_user(self):
+        self.user = User.objects.create_superuser(
+            username='testuser', email='testadmin@example.com', password='testpassword')
+        self.client.login(email='testadmin@example.com', password='testpassword')
+
+        url = reverse('post_create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
 
     def test_login_status_code(self):
         url = reverse('login')
