@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user',
     'utilities',
     'comments',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [

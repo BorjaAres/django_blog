@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
 from utilities import views as utilities_views
 from posts import views as posts_views
 from user import views as user_views
@@ -18,6 +19,7 @@ urlpatterns = [
     path('user/login/', user_views.UserLoginView.as_view(), name='login'),
     path('user/logout/', user_views.UserLogoutView.as_view(), name='logout'),
     path('user/register/', user_views.UserRegistrationView.as_view(), name='register'),
+    # path('posts/<int:pk>/', include('socialShare.urls'))  # this is my app urls
 ]
 
 # when DEBUG is True, this code adds URL patterns that enable Django to serve media files directly during development.
