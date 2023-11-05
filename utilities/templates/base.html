@@ -11,6 +11,7 @@
 
 
     <title>{% block title %}Tea Blog{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="../../media/images/favicon.ico">
 
     <!-- Prefetch -->
 
@@ -34,6 +35,10 @@
                     </h1>
 
                     <nav>
+                        <a href="/">
+                            <img class="logo-img" src="../../media/images/logo2.png" alt="logo">
+                        </a>
+
                         <a class="blog-link" href="{% url 'blog_home' %}">Blog</a>
 
                         {% if user.is_authenticated %}
@@ -61,8 +66,7 @@
                 </div>
 
                 <div class="header__text ">
-                    <h2 class="">Buy the best selection of Eastern Teas</h2>
-                    <p class="">Infuse your life with flavour</p>
+                    <h2 class="">Delve into the wonderful world of Tea</h2>
                 </div>
 
             </div>
