@@ -34,7 +34,7 @@
 /* Styles for the shop background images */
 .shop-section {
   height: 60rem; /* Set a fixed height for the .entry elements */
-  font-family: var(--header-shop);
+  font-family: var(--header);
 }
 
 .shop-section__asia {
