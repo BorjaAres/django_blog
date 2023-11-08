@@ -1,8 +1,66 @@
 /* Contact */
-.contact-input{
-  width: 100%;
-  padding: 10rem;
-  margin: 1rem;
-  border-radius: 1rem;
-  border: var(--light-black) 1px solid;
+.contact-container{
+    display: flex;
+    background-color: var(--lighter-grey);
+    box-shadow: 0px 5px 15px 0px rgba(112,112,112,0.59);
+    border-radius: 1rem;
+    max-width: 95%;
+    padding: 20px;
+    margin: 3rem 1rem;
+    justify-content: center;
+    text-align: center;
 }
+
+@media (min-width: 768px) {
+  .contact-container {
+      padding: 5rem 20rem;
+      margin: 10rem;
+      max-width: 80%;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-container main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/*.contact-input div {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+.contact-input {
+  width: 100%;
+  padding: 3px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.contact-submit {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .contact-submit {
+    max-width: 90%;
+  }
+}
+

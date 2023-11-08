@@ -1,5 +1,4 @@
 /* General Styles for the posts */
-
 .blog-container {
     display: grid;
     grid-template-columns: 1fr;
