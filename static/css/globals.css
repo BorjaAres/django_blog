@@ -17,7 +17,7 @@
     --white: rgb(255, 255, 255);
     --black: rgb(0, 0, 0);
     --bluish-grey: #dfe9f3;
-    --header-shop: 'Dancing Script', cursive;
+    --header: 'Dancing Script', cursive;
     --content: 'Quicksand', sans-serif;
 
 }
@@ -25,7 +25,7 @@
 /*Globals*/
 html {
     font-size: 62.5%;
-      box-sizing: border-box; /*Hack para box-model*/
+    box-sizing: border-box; /*Hack para box-model*/
 
 }
 *, *:before, *:after {
@@ -42,7 +42,7 @@ body {
     background-color: var(--bluish-grey);
     text-align: center;
     font-family: var(--content);
-
+    padding-top: 5rem;
 }
 
 .text-left {
@@ -80,13 +80,6 @@ body {
 @media (min-width: 768px) {
   .blog {
     margin: 2rem;
-
-  }
-}
-
-@media (min-width: 1023px) {
-  .blog {
-
   }
 }
 

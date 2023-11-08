@@ -1,109 +1,110 @@
+{% load social_share %}
 {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Eastern Tea Blog">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Eastern Tea Blog">
 
+        <!--FONT AWESOME-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <title>{% block title %}Tea Blog{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="../../media/images/favicon.ico">
+        <!--GOOGLE FONTS-->
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <!-- Prefetch -->
+        <title>{% block title %}Tea Blog{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="../../media/images/favicon.ico">
 
-    <!-- Preload -->
-    <link rel="preload" href="{% static 'css/main.css' %}" as="style">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <!-- Prefetch -->
 
-    <link rel="preload" href="{% static 'css/normalize.css' %}" as="style">
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+        <!-- Preload -->
+        <link rel="preload" href="{% static 'css/main.css' %}" as="style">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-</head>
+        <link rel="preload" href="{% static 'css/normalize.css' %}" as="style">
+        <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 
-<body>
-    <!-- Header Section -->
-    {% block header %}
-        <header class="header">
-            <div>
-                <div class="header-fixed">
-                    <h1 class="">
-                        <a class="logo-link" href="/">TeaBlog</a>
-                    </h1>
+    </head>
 
-                    <nav>
-                        <a href="/">
-                            <img class="logo-img" src="../../media/images/logo2.png" alt="logo">
-                        </a>
+    <body>
+        <!-- Header Section -->
+        {% block header %}
+            <header class="header header-footer-common header-fixed">
+                <section class="top-nav row">
+                  <div>
+                    <a href="/">
+                        <img class="logo-img" src="../../media/images/logo2.png" alt="logo">
+                    </a>
+                  </div>
 
-                        <a class="blog-link" href="{% url 'blog_home' %}">Blog</a>
+                  <input id="menu-toggle" type="checkbox"/>
 
-                        {% if user.is_authenticated %}
-                            <a class="login-link" href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                            <a class="login-link" href="{% url 'login' %}">Login</a>
-                        {% endif %}
+                  <label class='menu-button-container' for="menu-toggle">
+                      <div class='menu-button'></div>
+                  </label>
 
-                        {% if user.is_authenticated and user.is_staff %}
-                          <a class="post_create-link" href="{% url 'post_create' %}">Create a New Post</a>
-                        {% endif %}
+                  <ul class="menu">
+                    <li><a href="{% url 'blog_home' %}">Blog Home</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'about_us' %}">About Us</a></li>
+                    <li><a href="{% url 'all_posts' %}">All Posts</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
 
-                        <div class="navigation header__navigation centered position-absolute">
-                            <a href="{% url 'about_us' %}" class="navigation__link" id="">
+                    {% if user.is_authenticated and user.is_staff %}
+                        <li><a href="{% url 'post_create' %}">Create a New Post</a></li>
+                    {% endif %}
+                </ul>
+              </section>
+            </header>
 
-                                <span class="circle circle_about centered position-absolute
-                                    {% if 'about_us' in request.path %} active {% endif %}">About Us</span>
-                            </a>
-                            <a href="{% url 'contact' %}" class="navigation__link" id="">
-                                <span class="circle circle_contact centered position-absolute
-                                    {% if 'contact' in request.path %} active {% endif %}">Contact</span>
-                            </a>
-                        </div>
-                    </nav>
+{#            <div class="header__text">#}
+{#                <h2 class="">Life is better with Tea</h2>#}
+{#            </div>#}
+
+        {% endblock %}
+
+        <!-- Main Section -->
+        {% block main %}
+        {% endblock %}
+
+        <!-- Footer Section -->
+        {% block footer %}
+        <footer>
+            <div class="footer header-footer-common">
+                <div class="row">
+                    <a href="https://www.facebook.com/DiscoverTeas/"><i class="fa fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/tastycuppa/"><i class="fa fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/watch?v=Yx8EmMuMjgM"><i class="fa fa-youtube"></i></a>
+                    <a href="https://twitter.com/tea"><i class="fa fa-twitter"></i></a>
                 </div>
 
-                <div class="header__text ">
-                    <h2 class="">Delve into the wonderful world of Tea</h2>
+                <div class="row">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="{% url 'blog_home' %}">Blog</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'all_posts' %}">All Posts</a></li>
+
+                    </ul>
                 </div>
 
+                <div class="row">
+                    © 2023 Borja Ares. All Rights Reserved.
+                </div>
             </div>
-        </header>
-
-    {% endblock %}
-
-    <!-- Main Section -->
-    {% block main %}
-    {% endblock %}
-
-    <!-- Footer Section -->
-    {% block footer %}
-    <div class="">
-        <footer class="footer position-relative">
-
-                <div class="bar">
-
-                    <h1 class="logo">
-                        <a class="logo-link logo__footer" href="/">Tea<span class="logo__bold">Blog</span></a>
-                    </h1>
-
-                    <nav class="navigation footer-navigation centered position-absolute">
-                        <a href="{% url 'about_us' %}" class="navigation__link" id="">
-                            <span class="circle circle_about centered position-absolute{% if 'about_us' in request.path %} active {% endif %}">About Us</span>
-                        </a>
-                        <a href="{% url 'contact' %}" class="navigation__link" id="">
-                            <span class="circle circle_contact centered position-absolute {% if 'contact' in request.path %} active {% endif %}">Contact</span>
-                        </a>
-                    </nav>
-                    <a href="#" class="footer__button-scroll">Scroll Back Up</a>
-                </div>
         </footer>
-    </div>
-    {% endblock %}
+        {% endblock %}
+        <script>
 
-    <script src="{% static 'js/scripts.js' %}"></script>
-
-</body>
+        </script>
+    </body>
 </html>
