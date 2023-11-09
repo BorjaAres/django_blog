@@ -55,6 +55,6 @@
 }
 
 .responsive-textarea {
-    width: 100%; /* Use any percentage value that fits your design */
-    max-width: 100%; /* Ensures it doesn't exceed the parent container width */
+    width: 100%;
+    max-width: 100%;
 }
