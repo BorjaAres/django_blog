@@ -138,3 +138,16 @@ AUTH_USER_MODEL = "user.User" # new
 
 # LOGIN_REDIRECT_URL = 'index' # new
 LOGOUT_REDIRECT_URL = '/'  # Redirect to the home page after logout
+
+# Email settings for Mailtrap
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = '28374fe9a4fa76'  # Mailtrap username
+EMAIL_HOST_PASSWORD = 'be09e7932e1071'  # Mailtrap password
+EMAIL_USE_TLS = True
+
+# Default "from" address for emails sent from your application
+DEFAULT_FROM_EMAIL = 'your_email@example.com'
+
+

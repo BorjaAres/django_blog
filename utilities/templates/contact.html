@@ -2,22 +2,24 @@
 
 {% block main %}
       <!-- Main Content Section -->
-    <form class="form">
-        <div class="contact-container">
-            <main>
-                <div>
-                    <input class="contact-input" type="text" name="name" placeholder="Name">
-                </div>
-                <div>
-                    <input class="contact-input" type="email" name="email" placeholder="Email">
-                </div>
-                <div>
-                    <textarea class="contact-input" name="message" cols="30" rows="10" placeholder="Message"></textarea>
-                </div>
-                <div>
-                    <input class="contact-submit" type="submit" value="Send">
-                </div>
-            </main>
-        </div>
+    <form class="form" method="post">
+         <div class="contact-container">
+            {% csrf_token %}
+            {% if not user.is_authenticated %}
+            <div class="contact-input">
+                <label for="{{ form.name.id_for_label }}">Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="contact-input">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+            </div>
+            {% endif %}
+            <div class="contact-input">
+                <label for="{{ form.message.id_for_label }}">Message:</label>
+                {{ form.message }}
+            </div>
+            <button class="contact-submit" type="submit">Send</button>
+         </div>
     </form>
 {% endblock %}
