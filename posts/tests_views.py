@@ -110,3 +110,46 @@ class TestPostsViews(TestCase):
         response = client.get(reverse('post_create'))
 
         self.assertEqual(response.status_code, 403)
+
+    def test_search_results_with_valid_query(self):
+        # Send a GET request with a valid search query
+        response = self.client.get(reverse('search_results'), {'q': 'Test'})
+
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the posts containing the search query are in the context
+        self.assertIn(self.post, response.context['posts'])
+        self.assertIn(self.post, response.context['posts'])
+
+        # Check if the posts not containing the search query are not in the context
+        self.assertNotIn('Nonexistent Post', response.context['posts'])
+
+        # Check if the correct template is used
+        self.assertTemplateUsed(response, 'search_results.html')
+
+    def test_search_results_with_empty_query(self):
+        # Send a GET request with an empty search query
+        response = self.client.get(reverse('search_results'), {'q': ''})
+
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the context contains the appropriate message for no results
+        self.assertContains(response, 'No articles found.')
+
+        # Check if the correct template is used
+        self.assertTemplateUsed(response, 'search_results.html')
+
+    def test_search_results_with_invalid_query(self):
+        # Send a GET request with an invalid search query
+        response = self.client.get(reverse('search_results'), {'q': 'InvalidQuery'})
+
+        # Check if the response status code is 200 (success)
+        self.assertEqual(response.status_code, 200)
+
+        # Check if the context contains the appropriate message for no results
+        self.assertContains(response, 'No articles found.')
+
+        # Check if the correct template is used
+        self.assertTemplateUsed(response, 'search_results.html')

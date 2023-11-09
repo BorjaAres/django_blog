@@ -35,46 +35,43 @@
         {% block header %}
             <header class="header header-footer-common header-fixed">
                 <section class="top-nav row">
-                  <div>
-                    <a href="/">
-                        <img class="logo-img" src="../../media/images/logo2.png" alt="logo">
-                    </a>
-                  </div>
+                    <div>
+                        <a href="/">
+                            <img class="logo-img" src="../../media/images/logo2.png" alt="logo">
+                        </a>
+                    </div>
 
-                  <input id="menu-toggle" type="checkbox"/>
-
-                  <label class='menu-button-container' for="menu-toggle">
-                      <div class='menu-button'></div>
-                  </label>
-
-                  <ul class="menu">
-                    <li><a href="{% url 'blog_home' %}">Blog Home</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                    <li><a href="{% url 'about_us' %}">About Us</a></li>
-                    <li><a href="{% url 'all_posts' %}">All Posts</a></li>
-                    <!-- search_form.html -->
-                    <li>
+                    <!-- search_form -->
+                    <div>
                         <form method="GET" action="{% url 'search_results' %}">
-                            <input type="text" name="q" placeholder="Search articles..." formnovalidate>
+                            <input  class="search-input" type="text" name="q" placeholder="Search posts..." formnovalidate>
                         </form>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'logout' %}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{% url 'login' %}">Login</a></li>
-                    {% endif %}
+                    </div>
 
-                    {% if user.is_authenticated and user.is_staff %}
-                        <li><a href="{% url 'post_create' %}">Create a New Post</a></li>
-                    {% endif %}
+                    <input id="menu-toggle" type="checkbox"/>
+
+                    <label class='menu-button-container' for="menu-toggle">
+                        <div class='menu-button'></div>
+                    </label>
+
+                    <ul class="menu">
+                        <li><a href="{% url 'blog_home' %}">Blog Home</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'all_posts' %}">All Posts</a></li>
+
+                        {% if user.is_authenticated %}
+                          <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                          <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
+
+                        {% if user.is_authenticated and user.is_staff %}
+                          <li><a href="{% url 'post_create' %}">Create a New Post</a></li>
+                        {% endif %}
                 </ul>
               </section>
             </header>
-
-{#            <div class="header__text">#}
-{#                <h2 class="">Life is better with Tea</h2>#}
-{#            </div>#}
-
         {% endblock %}
 
         <!-- Main Section -->

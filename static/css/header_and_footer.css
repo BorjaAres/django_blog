@@ -47,6 +47,12 @@
     justify-content: center;
 }
 
+@media (min-width: 1024px) {
+  .menu {
+    padding-right: 23rem;
+  }
+}
+
 .menu > li {
   /*margin: 0 1rem;*/
   overflow: hidden;
@@ -162,10 +168,18 @@
     height: 50px;
 }
 
+.search-input {
+    padding: 0 20px;
+    margin-left: 5rem;
+    max-width: 60%;
+    height: 2rem;
+}
+
 /* Footer */
 .footer{
     background:#000;
     text-align:center;
+    margin-top: 2rem;
 }
 
 .footer .row{
@@ -185,6 +199,7 @@ margin:0 1%;
         padding: 1rem;
     }
 }
+
 
 
 

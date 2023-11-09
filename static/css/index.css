@@ -12,5 +12,6 @@
 @media (min-width: 1023px) {
   .index__post__button{
     width: 20%;
+      margin-top: 5rem;
   }
 }
