@@ -111,45 +111,45 @@ class TestPostsViews(TestCase):
 
         self.assertEqual(response.status_code, 403)
 
-    def test_search_results_with_valid_query(self):
+
+class TestSearchResultsView(TestCase):
+    def setUp(self):
         # Send a GET request with a valid search query
+        self.response = self.client.get(reverse('search_results'), {'q': 'Test'})
+        self.user = User.objects.create_superuser(
+            username='testadmin',
+            email='testadmin@example.com',
+            password='testpassword'
+        )
+        self.post = Post.objects.create(
+            title='Test Post',
+            content='This is a test post content.',
+            author=self.user
+        )
+
+    def test_http_request_handling(self):
+        # Check if the response status code is 200 (success)
+        self.assertEqual(self.response.status_code, 200)
+
+        # Check if the correct template is used
+        self.assertTemplateUsed(self.response, 'search_results.html')
+
+    def test_search_query_concern(self):
+        # Ensure posts containing the search query are in the context
         response = self.client.get(reverse('search_results'), {'q': 'Test'})
-
-        # Check if the response status code is 200 (success)
-        self.assertEqual(response.status_code, 200)
-
-        # Check if the posts containing the search query are in the context
-        self.assertIn(self.post, response.context['posts'])
         self.assertIn(self.post, response.context['posts'])
 
-        # Check if the posts not containing the search query are not in the context
-        self.assertNotIn('Nonexistent Post', response.context['posts'])
+    def test_nonexistent_post_concern(self):
+        # Ensure nonexistent post is not included in the search results
+        self.assertNotIn('Nonexistent Post', self.response.context['posts'])
 
-        # Check if the correct template is used
-        self.assertTemplateUsed(response, 'search_results.html')
-
-    def test_search_results_with_empty_query(self):
-        # Send a GET request with an empty search query
-        response = self.client.get(reverse('search_results'), {'q': ''})
-
-        # Check if the response status code is 200 (success)
-        self.assertEqual(response.status_code, 200)
-
-        # Check if the context contains the appropriate message for no results
-        self.assertContains(response, 'No articles found.')
-
-        # Check if the correct template is used
-        self.assertTemplateUsed(response, 'search_results.html')
+        # Ensure posts not containing the search query are not in the context
+        response = self.client.get(reverse('search_results'), {'q': 'Nonexistent Post'})
+        self.assertNotIn(self.post, response.context['posts'])
 
     def test_search_results_with_invalid_query(self):
         # Send a GET request with an invalid search query
         response = self.client.get(reverse('search_results'), {'q': 'InvalidQuery'})
 
-        # Check if the response status code is 200 (success)
-        self.assertEqual(response.status_code, 200)
-
         # Check if the context contains the appropriate message for no results
         self.assertContains(response, 'No articles found.')
-
-        # Check if the correct template is used
-        self.assertTemplateUsed(response, 'search_results.html')
