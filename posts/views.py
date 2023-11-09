@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
@@ -7,6 +8,7 @@ from comments.forms import CommentForm
 from django.http import HttpResponseForbidden
 from django.core.exceptions import PermissionDenied
 
+
 class BlogHomeView(ListView):
     model = Post
     template_name = 'blog_home.html'
@@ -14,16 +16,19 @@ class BlogHomeView(ListView):
     paginate_by = 6
     ordering = ['-date']
 
+
 class AllPostsView(ListView):
     model = Post
     template_name = 'all_posts.html'
     context_object_name = 'posts'
-    # ordering = ['-date']
+    ordering = ['-date']
+
 
 # Combine PostDisplay and PostComment into one view
 class PostDetailView(View, LoginRequiredMixin):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+
     def get(self, request, *args, **kwargs):
         view = PostDisplay.as_view()
         return view(request, *args, **kwargs)
@@ -31,6 +36,7 @@ class PostDetailView(View, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
         view = comments_views.PostComment.as_view()
         return view(request, *args, **kwargs)
+
 
 # Handles the GET request for the post detail page
 class PostDisplay(DetailView):
@@ -43,10 +49,11 @@ class PostDisplay(DetailView):
         context['form'] = CommentForm()
         return context
 
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'post_form.html'
-    fields = ['title', 'content', 'image',]  # Customize the fields as needed
+    fields = ['title', 'content', 'image', ]  # Customize the fields as needed
 
     def dispatch(self, request, *args, **kwargs):
         # Check if the user is a superuser or staff member
@@ -64,6 +71,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         # Redirect to the detail view of the newly created post
         return reverse('post_detail', kwargs={'pk': self.object.pk})
 
-# Handles the POST request for the post detail page
 
-
+def search_results(request):
+    query = request.GET.get('q')
+    posts = Post.objects.filter(title__icontains=query)
+    return render(request, 'search_results.html', {'posts': posts})

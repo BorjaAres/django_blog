@@ -52,6 +52,12 @@
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                     <li><a href="{% url 'about_us' %}">About Us</a></li>
                     <li><a href="{% url 'all_posts' %}">All Posts</a></li>
+                    <!-- search_form.html -->
+                    <li>
+                        <form method="GET" action="{% url 'search_results' %}">
+                            <input type="text" name="q" placeholder="Search articles..." formnovalidate>
+                        </form>
+                    </li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}

@@ -4,58 +4,60 @@
 
 {% block main %}
   <h1>Create a New Post</h1>
-  <form method="post" enctype="multipart/form-data">
+  <form class="form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <!-- Title Field -->
-    <div class="form-group">
-      <label for="id_title"></label>
-      {{ form.title.label_tag }}
-      {{ form.title }}
-      {% if form.title.errors %}
-        <div class="text-danger">
-          {{ form.title.errors }}
+      <div class="form-container">
+        <!-- Title Field -->
+        <div class="form-input">
+          <label for="id_title"></label>
+          {{ form.title.label_tag }}
+          {{ form.title }}
+          {% if form.title.errors %}
+            <div class="text-danger">
+              {{ form.title.errors }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
 
-    <!-- Content Field -->
-    <div class="form-group">
-      <label for="id_content"></label>
-      {{ form.content.label_tag }}
-      {{ form.content }}
-      {% if form.content.errors %}
-        <div class="text-danger">
-          {{ form.content.errors }}
+        <!-- Content Field -->
+        <div class="form-input">
+          <label for="id_content"></label>
+          {{ form.content.label_tag }}
+          {{ form.content }}
+          {% if form.content.errors %}
+            <div class="form-input">
+              {{ form.content.errors }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
 
-    <!-- Date Field -->
-    <div class="form-group">
-      <label for="id_date"></label>
-      {{ form.date.label_tag }}
-      {{ form.date }}
-      {% if form.date.errors %}
-        <div class="text-danger">
-          {{ form.date.errors }}
+        <!-- Date Field -->
+        <div class="form-input">
+          <label for="id_date"></label>
+          {{ form.date.label_tag }}
+          {{ form.date }}
+          {% if form.date.errors %}
+            <div class="text-danger">
+              {{ form.date.errors }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
 
-    <!-- Image Field -->
-    <div class="form-group">
-      <label for="id_image">Image:</label>
-      {{ form.image.label_tag }}
-      {{ form.image }}
-      {% if form.image.errors %}
-        <div class="text-danger">
-          {{ form.image.errors }}
+        <!-- Image Field -->
+        <div class="form-input">
+          <label for="id_image">Image:</label>
+          {{ form.image.label_tag }}
+          {{ form.image }}
+          {% if form.image.errors %}
+            <div class="text-danger">
+              {{ form.image.errors }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Create Post</button>
-  </form>
+        <!-- Submit Button -->
+        <button type="submit" class="form-submit">Create Post</button>
+        </div>
+    </form>
 {% endblock %}

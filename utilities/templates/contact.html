@@ -3,23 +3,23 @@
 {% block main %}
       <!-- Main Content Section -->
     <form class="form" method="post">
-         <div class="contact-container">
+         <div class="form-container">
             {% csrf_token %}
             {% if not user.is_authenticated %}
-            <div class="contact-input">
+            <div class="form-input">
                 <label for="{{ form.name.id_for_label }}">Name:</label>
                 {{ form.name }}
             </div>
-            <div class="contact-input">
+            <div class="form-input">
                 <label for="{{ form.email.id_for_label }}">Email:</label>
                 {{ form.email }}
             </div>
             {% endif %}
-            <div class="contact-input">
+            <div class="form-input">
                 <label for="{{ form.message.id_for_label }}">Message:</label>
                 {{ form.message }}
             </div>
-            <button class="contact-submit" type="submit">Send</button>
+            <button class="form-submit" type="submit">Send</button>
          </div>
     </form>
 {% endblock %}
