@@ -1,11 +1,24 @@
 <!-- search_results.html -->
 {% extends 'base.html' %}
 
-<h1>Search Results</h1>
-<ul>
-    {% for post in posts %}
-        <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></li>
-    {% empty %}
-        <li>No articles found.</li>
-    {% endfor %}
-</ul>
+{% block main %}
+    <h1>Search Results</h1>
+        <div class="blog-container">
+            {% for post in posts %}
+                <div class="blog" id="">
+                    <div class="post__content">
+                        <h3 class="post__title">{{ post.title }}</h3>
+
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image">
+                        {% endif %}
+
+                        <article class="text-left">{{ post.content|truncatewords:40|safe }}</article>
+                        <a href="{% url 'post_detail' post.id %}" class="post__button blog__post__button">Read Article</a>
+                    </div>
+                </div>
+            {% empty %}
+                <h2>No articles found.</h2>
+            {% endfor %}
+        </div>
+{% endblock %}
