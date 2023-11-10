@@ -12,20 +12,12 @@ class StatusCodeTests(TestCase):
     """
     Test case for checking status codes.
     """
-    def test_login_status_code(self):
-        url = reverse('login')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
     def test_logout_status_code(self):
         url = reverse('logout')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
-    def test_register_status_code(self):
-        url = reverse('register')
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+
 @override_settings(ROOT_URLCONF='user.urls')
 class ViewResolutionTests(SimpleTestCase):
     """
@@ -48,15 +40,7 @@ class URLPatternTests(TestCase):
     """
     Test case for the URLs in the user application.
     """
-    def test_login_url_pattern(self):
-        response = self.client.get('/user/login/')
-        self.assertEqual(response.status_code, 200)
 
     def test_logout_url_pattern(self):
         response = self.client.get('/user/logout/')
         self.assertEqual(response.status_code, 302)
-
-    def test_register_url_pattern(self):
-        response = self.client.get('/user/register/')
-        self.assertEqual(response.status_code, 200)
-

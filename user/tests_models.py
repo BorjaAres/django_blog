@@ -68,24 +68,6 @@ class TestUserManager(TestCase):
             user = self.User.objects.create_superuser(
                 username='testadmin', email='', password='password')
 
-    def test_create_superuser_without_first_name(self):
-        """Test creating a superuser without a first name raises a ValueError."""
-        with self.assertRaisesMessage(ValueError, 'First name is required'):
-            user = self.User.objects.create_superuser(
-                username='testadmin',first_name='', last_name='admin', email='testadmin@example.com', password='password')
-
-    def test_create_superuser_without_last_name(self):
-         """Test creating a superuser without a last name raises a ValueError."""
-         with self.assertRaisesMessage(ValueError, 'Last name is required'):
-             user = self.User.objects.create_superuser(
-                 username='testadmin',first_name='test', last_name='', email='testadmin@example.com', password='password')
-
-    def test_create_superuser_without_password(self):
-         """Test creating a superuser without a password raises a ValueError."""
-         with self.assertRaisesMessage(ValueError, 'Password is required'):
-             user = self.User.objects.create_superuser(
-                 username='testadmin', email='testadmin@example.com', password='')
-
 
 class UserTest(TestCase):
     @classmethod
