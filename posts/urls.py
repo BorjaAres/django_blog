@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path('posts/', views.BlogHomeView.as_view(), name='blog_home'),
     path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
@@ -8,3 +9,5 @@ urlpatterns = [
     path('posts/post/new/', views.PostCreateView.as_view(), name='post_create'),
     path('posts/search_results/', views.search_results, name='search_results'),
 ]
+
+
