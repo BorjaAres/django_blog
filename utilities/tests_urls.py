@@ -1,10 +1,7 @@
-from django.test import TestCase, SimpleTestCase, override_settings
+from django.test import SimpleTestCase, override_settings
 from django.urls import reverse, resolve
 from django.contrib.auth import get_user_model
-from user.views import UserLoginView, UserLogoutView, UserRegistrationView
-from posts.views import PostCreateView, BlogHomeView, AllPostsView, PostDetailView
 from utilities.views import IndexView, ContactView, AboutUsView
-from posts.models import Post
 
 User = get_user_model()
 

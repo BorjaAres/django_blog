@@ -8,6 +8,7 @@ from posts.models import Post
 
 User = get_user_model()
 
+
 class StatusCodeTests(TestCase):
     """
     Test case for checking status codes.

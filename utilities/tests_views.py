@@ -5,6 +5,7 @@ from django.core import mail
 from django.urls import reverse
 from user.models import User
 
+
 class TestUtilitiesViews(TestCase):
     """Test case for the views in the Utilities app."""
 
@@ -21,6 +22,7 @@ class TestUtilitiesViews(TestCase):
         response = client.get(reverse('about_us'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'about_us.html')
+
 
 class ContactViewTest(TestCase):
 

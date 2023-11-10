@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth import get_user_model  # Import the custom user model
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from posts.models import Post
 from user.models import User
+
 
 # Create a model for Comments on posts Posts
 class Comment(models.Model):

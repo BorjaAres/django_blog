@@ -6,7 +6,6 @@ from .models import Post
 from comments import views as comments_views
 from comments.forms import CommentForm
 from django.http import HttpResponseForbidden
-from django.core.exceptions import PermissionDenied
 
 
 class BlogHomeView(ListView):

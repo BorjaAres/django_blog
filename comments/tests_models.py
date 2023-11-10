@@ -1,10 +1,11 @@
 from django.test import TestCase
 from posts.models import Post
-from.models import Comment
+from .models import Comment
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 
 User = get_user_model()
+
 
 class CommentModelTests(TestCase):
     def setUp(self):
@@ -84,4 +85,3 @@ class CommentModelTests(TestCase):
         )
 
         self.assertEqual(str(comment), 'This is a test comment. | test@example.com | Test Post')
-

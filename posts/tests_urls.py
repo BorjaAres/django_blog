@@ -2,7 +2,6 @@ from django.test import TestCase, SimpleTestCase, override_settings
 from django.urls import reverse, resolve
 from .models import User, Post
 from .views import BlogHomeView, PostDetailView, AllPostsView, PostCreateView
-from user.views import UserLoginView, UserLogoutView, UserRegistrationView
 
 
 @override_settings(ROOT_URLCONF='posts.urls')
@@ -12,35 +11,34 @@ class StatusCodeTests(TestCase):
     """
 
     def test_post_detail_status_code(self):
-         """
+        """
          Test that the post detail view returns a status code of 200 (OK) with a valid post id.
          """
 
-         def test_post_detail_status_code(self):
-             user = User.objects.create_user(
-                 username='testuser',
-                 email='testuser@example.com',
-                 password='testpassword',
-             )
+        def test_post_detail_status_code(self):
+            user = User.objects.create_user(
+                username='testuser',
+                email='testuser@example.com',
+                password='testpassword',
+            )
 
-             post = Post.objects.create(
-                 title='Test Post',
-                 content='Test content',
-                 author=user,
-             )
+            post = Post.objects.create(
+                title='Test Post',
+                content='Test content',
+                author=user,
+            )
 
-             url = reverse('post_detail', args={post.id})
-             response = self.client.get(url)
-             self.assertEqual(response.status_code, 200)
-
+            url = reverse('post_detail', args={post.id})
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
 
     def test_post_create_status_code_unauthorized_user(self):
-         """
+        """
          Test that the post create view returns a status code of 200 (OK).
          """
-         url = reverse('post_create')
-         response = self.client.get(url)
-         self.assertEqual(response.status_code, 403)
+        url = reverse('post_create')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
 
 
 @override_settings(ROOT_URLCONF='posts.urls')
@@ -76,6 +74,7 @@ class ViewResolutionTests(SimpleTestCase):
         """
         url = reverse('post_create')
         self.assertEqual(resolve(url).func.view_class, PostCreateView)
+
 
 @override_settings(ROOT_URLCONF='posts.urls')
 class URLPatternTests(TestCase):

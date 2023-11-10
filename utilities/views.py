@@ -14,7 +14,7 @@ class IndexView(ListView):
 
 
 class ContactView(View):
-    template_name = 'contact.html'  # Specify your template name here
+    template_name = 'contact.html'
 
     def get(self, request):
         # Handle GET request

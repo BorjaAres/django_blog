@@ -7,6 +7,7 @@ from .forms import CommentForm
 from .views import PostComment
 from django.test import RequestFactory
 
+
 class CommentsViewsTests(TestCase):
     def setUp(self):
         # Create a test user
