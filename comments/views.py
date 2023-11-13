@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView, DeleteView
 
 # Handles the POST request for the post detail page(PostDetailView)
 class PostComment(LoginRequiredMixin, SingleObjectMixin, FormView):
-    login_url = '/login/'  # URL where users are redirected if not logged in
+    login_url = '/user/login/'  # URL where users are redirected if not logged in
     redirect_field_name = 'redirect_to'  # Name of the query parameter carrying the redirect URL
     model = Post  # The model associated with this view
     form_class = CommentForm  # The form used for posting comments
